@@ -6,17 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://github.com/lixiaote">
-  <title>Xiaote&#39;s Blog</title>
+  <title>Android带下划线的TextView | Xiaote&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Android 程序猿">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Xiaote's Blog">
-<meta property="og:url" content="https://github.com/lixiaote/index.html">
+  <meta name="description" content="#####前段时间做项目需要做一个待下划线的TextView,于是研究了下，通过万能的搜索找到这么几个方法：
+####1.设置TextView的Paint属性    tv3.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG );
+####2.用Html类的fromHtml（）方法格式化要放到TextView里的文字 ，与第1种一样，只是是用代码动态设置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android带下划线的TextView">
+<meta property="og:url" content="https://github.com/lixiaote/2016/11/29/UnderLineTextView/index.html">
 <meta property="og:site_name" content="Xiaote's Blog">
-<meta property="og:description" content="Android 程序猿">
+<meta property="og:description" content="#####前段时间做项目需要做一个待下划线的TextView,于是研究了下，通过万能的搜索找到这么几个方法：
+####1.设置TextView的Paint属性    tv3.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG );
+####2.用Html类的fromHtml（）方法格式化要放到TextView里的文字 ，与第1种一样，只是是用代码动态设置">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1673277-632d6d177c720e70?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1673277-c1a25f278709ed5e?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2016-11-29T06:48:36.348Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Xiaote's Blog">
-<meta name="twitter:description" content="Android 程序猿">
+<meta name="twitter:title" content="Android带下划线的TextView">
+<meta name="twitter:description" content="#####前段时间做项目需要做一个待下划线的TextView,于是研究了下，通过万能的搜索找到这么几个方法：
+####1.设置TextView的Paint属性    tv3.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG );
+####2.用Html类的fromHtml（）方法格式化要放到TextView里的文字 ，与第1种一样，只是是用代码动态设置">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1673277-632d6d177c720e70?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="Xiaote&#39;s Blog" type="application/atom+xml">
   
@@ -140,9 +150,7 @@
 </nav>
 
       <div class="body-wrap">
-        
-  
-    <article id="post-UnderLineTextView" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-UnderLineTextView" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <input type="hidden" class="isFancy" />
@@ -151,8 +159,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/29/UnderLineTextView/">Android带下划线的TextView</a>
+    <h1 class="article-title" itemprop="name">
+      Android带下划线的TextView
     </h1>
   
 
@@ -278,70 +286,44 @@ public void setUnderlineWidth(float mStrokeWidth) {
   </div>
 </article>
 
-
-
-
-
-
-
-
-
-
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/09/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      <a href="/2016/09/09/hello-world/" class="archive-article-date">
-  	<time datetime="2016-09-09T03:34:32.632Z" itemprop="datePublished"><i class="icon-clock"></i>2016-09-09</time>
-</a>
-      
-      
-
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-
-
+<nav id="article-nav">
   
   
+    <a href="/2016/09/09/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hello World</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
 
 
       </div>
@@ -363,8 +345,8 @@ public void setUnderlineWidth(float mStrokeWidth) {
 		fancybox: true,
 		mathjax: false,
 		animate: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
