@@ -8,21 +8,18 @@
   <link rel="dns-prefetch" href="https://github.com/lixiaote">
   <title>Android带下划线的TextView | Xiaote&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前段时间做项目需要做一个待下划线的TextView,于是研究了下，通过万能的搜索找到这么几个方法：1.设置TextView的Paint属性tv3.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG );
-2.用Html类的fromHtml（）方法格式化要放到TextView里的文字 ，与第1种一样，只是是用代码动态设置tv1.setText(Html.f">
+  <meta name="description" content="前段时间做项目需要做一个待下划线的TextView,于是研究了下，通过万能的搜索找到这么几个方法：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android带下划线的TextView">
 <meta property="og:url" content="https://github.com/lixiaote/2016/11/29/UnderLineTextView/index.html">
 <meta property="og:site_name" content="Xiaote's Blog">
-<meta property="og:description" content="前段时间做项目需要做一个待下划线的TextView,于是研究了下，通过万能的搜索找到这么几个方法：1.设置TextView的Paint属性tv3.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG );
-2.用Html类的fromHtml（）方法格式化要放到TextView里的文字 ，与第1种一样，只是是用代码动态设置tv1.setText(Html.f">
+<meta property="og:description" content="前段时间做项目需要做一个待下划线的TextView,于是研究了下，通过万能的搜索找到这么几个方法：">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1673277-632d6d177c720e70?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1673277-c1a25f278709ed5e?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2016-12-14T10:46:38.302Z">
+<meta property="og:updated_time" content="2016-12-14T10:56:45.664Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android带下划线的TextView">
-<meta name="twitter:description" content="前段时间做项目需要做一个待下划线的TextView,于是研究了下，通过万能的搜索找到这么几个方法：1.设置TextView的Paint属性tv3.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG );
-2.用Html类的fromHtml（）方法格式化要放到TextView里的文字 ，与第1种一样，只是是用代码动态设置tv1.setText(Html.f">
+<meta name="twitter:description" content="前段时间做项目需要做一个待下划线的TextView,于是研究了下，通过万能的搜索找到这么几个方法：">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1673277-632d6d177c720e70?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="Xiaote&#39;s Blog" type="application/atom+xml">
@@ -165,8 +162,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <a id="more"></a>
-<h5 id="前段时间做项目需要做一个待下划线的TextView-于是研究了下，通过万能的搜索找到这么几个方法："><a href="#前段时间做项目需要做一个待下划线的TextView-于是研究了下，通过万能的搜索找到这么几个方法：" class="headerlink" title="前段时间做项目需要做一个待下划线的TextView,于是研究了下，通过万能的搜索找到这么几个方法："></a>前段时间做项目需要做一个待下划线的TextView,于是研究了下，通过万能的搜索找到这么几个方法：</h5><h5 id="1-设置TextView的Paint属性"><a href="#1-设置TextView的Paint属性" class="headerlink" title="1.设置TextView的Paint属性"></a>1.设置TextView的Paint属性</h5><p><code>tv3.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG );</code></p>
+        <h5 id="前段时间做项目需要做一个待下划线的TextView-于是研究了下，通过万能的搜索找到这么几个方法："><a href="#前段时间做项目需要做一个待下划线的TextView-于是研究了下，通过万能的搜索找到这么几个方法：" class="headerlink" title="前段时间做项目需要做一个待下划线的TextView,于是研究了下，通过万能的搜索找到这么几个方法："></a>前段时间做项目需要做一个待下划线的TextView,于是研究了下，通过万能的搜索找到这么几个方法：</h5><a id="more"></a>
+<h5 id="1-设置TextView的Paint属性"><a href="#1-设置TextView的Paint属性" class="headerlink" title="1.设置TextView的Paint属性"></a>1.设置TextView的Paint属性</h5><p><code>tv3.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG );</code></p>
 <h5 id="2-用Html类的fromHtml（）方法格式化要放到TextView里的文字-，与第1种一样，只是是用代码动态设置"><a href="#2-用Html类的fromHtml（）方法格式化要放到TextView里的文字-，与第1种一样，只是是用代码动态设置" class="headerlink" title="2.用Html类的fromHtml（）方法格式化要放到TextView里的文字 ，与第1种一样，只是是用代码动态设置"></a>2.用Html类的fromHtml（）方法格式化要放到TextView里的文字 ，与第1种一样，只是是用代码动态设置</h5><p><code>tv1.setText(Html.fromHtml(&quot;&lt;u&gt;&quot;+&quot;北京雾霾“净化”塔更名“警示”塔&quot;+&quot;&lt;u/&gt;&quot;));</code>             </p>
 <h5 id="3-使用SpannableString类"><a href="#3-使用SpannableString类" class="headerlink" title="3.使用SpannableString类"></a>3.使用SpannableString类</h5><figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">String</span> <span class="built_in">text</span>=<span class="string">"北京雾霾“净化”塔更名“警示”塔"</span>;</div><div class="line">SpannableString content = <span class="keyword">new</span> SpannableString(<span class="built_in">text</span>); content.setSpan(<span class="keyword">new</span> UnderlineSpan(), <span class="number">0</span>, <span class="built_in">text</span>.length(), <span class="number">0</span>);</div><div class="line">tv4.setText(content);</div></pre></td></tr></table></figure>
 <h5 id="效果图如下："><a href="#效果图如下：" class="headerlink" title="效果图如下："></a>效果图如下：</h5><p> <img src="http://upload-images.jianshu.io/upload_images/1673277-632d6d177c720e70?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="下划线"></p>
