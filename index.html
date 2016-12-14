@@ -160,7 +160,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h5 id="前段时间做项目需要做一个待下划线的TextView-于是研究了下，通过万能的搜索找到这么几个方法："><a href="#前段时间做项目需要做一个待下划线的TextView-于是研究了下，通过万能的搜索找到这么几个方法：" class="headerlink" title="前段时间做项目需要做一个待下划线的TextView,于是研究了下，通过万能的搜索找到这么几个方法："></a>前段时间做项目需要做一个待下划线的TextView,于是研究了下，通过万能的搜索找到这么几个方法：</h5><h5 id="1-设置TextView的Paint属性"><a href="#1-设置TextView的Paint属性" class="headerlink" title="1.设置TextView的Paint属性"></a>1.设置TextView的Paint属性</h5><p><code>tv3.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG );</code></p>
+        <a id="more"></a>
+<h5 id="前段时间做项目需要做一个待下划线的TextView-于是研究了下，通过万能的搜索找到这么几个方法："><a href="#前段时间做项目需要做一个待下划线的TextView-于是研究了下，通过万能的搜索找到这么几个方法：" class="headerlink" title="前段时间做项目需要做一个待下划线的TextView,于是研究了下，通过万能的搜索找到这么几个方法："></a>前段时间做项目需要做一个待下划线的TextView,于是研究了下，通过万能的搜索找到这么几个方法：</h5><h5 id="1-设置TextView的Paint属性"><a href="#1-设置TextView的Paint属性" class="headerlink" title="1.设置TextView的Paint属性"></a>1.设置TextView的Paint属性</h5><p><code>tv3.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG );</code></p>
 <h5 id="2-用Html类的fromHtml（）方法格式化要放到TextView里的文字-，与第1种一样，只是是用代码动态设置"><a href="#2-用Html类的fromHtml（）方法格式化要放到TextView里的文字-，与第1种一样，只是是用代码动态设置" class="headerlink" title="2.用Html类的fromHtml（）方法格式化要放到TextView里的文字 ，与第1种一样，只是是用代码动态设置"></a>2.用Html类的fromHtml（）方法格式化要放到TextView里的文字 ，与第1种一样，只是是用代码动态设置</h5><p><code>tv1.setText(Html.fromHtml(&quot;&lt;u&gt;&quot;+&quot;北京雾霾“净化”塔更名“警示”塔&quot;+&quot;&lt;u/&gt;&quot;));</code>             </p>
 <h5 id="3-使用SpannableString类"><a href="#3-使用SpannableString类" class="headerlink" title="3.使用SpannableString类"></a>3.使用SpannableString类</h5><figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">String</span> <span class="built_in">text</span>=<span class="string">"北京雾霾“净化”塔更名“警示”塔"</span>;</div><div class="line">SpannableString content = <span class="keyword">new</span> SpannableString(<span class="built_in">text</span>); content.setSpan(<span class="keyword">new</span> UnderlineSpan(), <span class="number">0</span>, <span class="built_in">text</span>.length(), <span class="number">0</span>);</div><div class="line">tv4.setText(content);</div></pre></td></tr></table></figure>
 <h5 id="效果图如下："><a href="#效果图如下：" class="headerlink" title="效果图如下："></a>效果图如下：</h5><p> <img src="http://upload-images.jianshu.io/upload_images/1673277-632d6d177c720e70?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="下划线"></p>
@@ -226,16 +227,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+        <p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
+        <p class="article-more-link">
+          <a class="article-more-a"  href="/2016/09/09/hello-world/#more">more >></a>
+        </p>
       
     </div>
     <div class="article-info article-info-index">
