@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="https://github.com/lixiaote">
+  <title>Android中RelativeLayout和LinearLayout性能分析 | Xiaote&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="先看一些现象吧：用eclipse或者Android studio，新建一个Activity自动生成的布局文件都是RelativeLayout，或许你会认为这是IDE的默认设置问题，其实不然，这是由 android-sdk\tools\templates\activities\BlankActivity\root\res\layout\activity_simple.xml.ftl 这个文件事先就定">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android中RelativeLayout和LinearLayout性能分析">
+<meta property="og:url" content="https://github.com/lixiaote/2017/01/18/layoutFouction/index.html">
+<meta property="og:site_name" content="Xiaote's Blog">
+<meta property="og:description" content="先看一些现象吧：用eclipse或者Android studio，新建一个Activity自动生成的布局文件都是RelativeLayout，或许你会认为这是IDE的默认设置问题，其实不然，这是由 android-sdk\tools\templates\activities\BlankActivity\root\res\layout\activity_simple.xml.ftl 这个文件事先就定">
+<meta property="og:image" content="http://i.imgur.com/fboIfAp.png">
+<meta property="og:updated_time" content="2017-01-18T07:08:08.216Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android中RelativeLayout和LinearLayout性能分析">
+<meta name="twitter:description" content="先看一些现象吧：用eclipse或者Android studio，新建一个Activity自动生成的布局文件都是RelativeLayout，或许你会认为这是IDE的默认设置问题，其实不然，这是由 android-sdk\tools\templates\activities\BlankActivity\root\res\layout\activity_simple.xml.ftl 这个文件事先就定">
+<meta name="twitter:image" content="http://i.imgur.com/fboIfAp.png">
+  
+    <link rel="alternative" href="/atom.xml" title="Xiaote&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/assets/img/favicon.ico">
+  
+  <link rel="stylesheet" href="/main.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="/assets/blogImg/avatar.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Xiaote</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">不积跬步，无以至千里</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/photos">相册</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">友链</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="3" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/lixiaote" title="github">github</a>
+		        
+					<a class="weibo" target="_blank" href="http://weibo.com/leetalon" title="weibo">weibo</a>
+		        
+					<a class="rss" target="_blank" href="/ /atom.xml" title="rss">rss</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">Xiaote</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="/assets/blogImg/avatar.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Xiaote</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">不积跬步，无以至千里</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/photos">相册</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/lixiaote" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/leetalon" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/ /atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-layoutFouction" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android中RelativeLayout和LinearLayout性能分析
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>先看一些现象吧：用eclipse或者Android studio，新建一个Activity自动生成的布局文件都是RelativeLayout，或许你会认为这是IDE的默认设置问题，其实不然，这是由 android-sdk\tools\templates\activities\BlankActivity\root\res\layout\activity_simple.xml.ftl 这个文件事先就定好了的，也就是说这是Google的选择，而非IDE的选择。那SDK为什么会默认给开发者新建一个默认的RelativeLayout布局呢？当然是因为RelativeLayout的性能更优，性能至上嘛。但是我们再看看默认新建的这个RelativeLayout的父容器，也就是当前窗口的顶级View——DecorView，它却是个垂直方向的LinearLayout，上面是标题栏，下面是内容栏。那么问题来了，Google为什么给开发者默认新建了个RelativeLayout，而自己却偷偷用了个LinearLayout，到底谁的性能更高，开发者该怎么选择呢？<br><a id="more"></a></p>
+<p>###View的一些基本工作原理</p>
+<p>先通过几个问题，简单的了解写android中View的工作原理吧。</p>
+<p>####View是什么？</p>
+<p>简单来说，View是Android系统在屏幕上的视觉呈现，也就是说你在手机屏幕上看到的东西都是View。</p>
+<p>####View是怎么绘制出来的？</p>
+<p>View的绘制流程是从ViewRoot的performTraversals（）方法开始，依次经过measure（），layout（）和draw（）三个过程才最终将一个View绘制出来。</p>
+<p>####View是怎么呈现在界面上的？</p>
+<p>Android中的视图都是通过Window来呈现的，不管Activity、Dialog还是Toast它们都有一个Window，然后通过WindowManager来管理View。Window和顶级View——DecorView的通信是依赖ViewRoot完成的。</p>
+<p>####View和ViewGroup什么区别？</p>
+<p>不管简单的Button和TextView还是复杂的RelativeLayout和ListView，他们的共同基类都是View。所以说，View是一种界面层控件的抽象，他代表了一个控件。那ViewGroup是什么东西，它可以被翻译成控件组，即一组View。ViewGroup也是继承View，这就意味着View本身可以是单个控件，也可以是多个控件组成的控件组。根据这个理论，Button显然是个View，而RelativeLayout不但是一个View还可以是一个ViewGroup，而ViewGroup内部是可以有子View的，这个子View同样也可能是ViewGroup，以此类推。</p>
+<p>###RelativeLayout和LinearLayout性能PK</p>
+<p>基于以上原理和大背景，我们要探讨的性能问题，说的简单明了一点就是：当RelativeLayout和LinearLayout分别作为ViewGroup，表达相同布局时绘制在屏幕上时谁更快一点。上面已经简单说了View的绘制，从ViewRoot的performTraversals（）方法开始依次调用perfromMeasure、performLayout和performDraw这三个方法。这三个方法分别完成顶级View的measure、layout和draw三大流程，其中perfromMeasure会调用measure，measure又会调用onMeasure，在onMeasure方法中则会对所有子元素进行measure，这个时候measure流程就从父容器传递到子元素中了，这样就完成了一次measure过程，接着子元素会重复父容器的measure，如此反复就完成了整个View树的遍历。同理，performLayout和performDraw也分别完成perfromMeasure类似的流程。通过这三大流程，分别遍历整棵View树，就实现了Measure，Layout，Draw这一过程，View就绘制出来了。那么我们就分别来追踪下RelativeLayout和LinearLayout这三大流程的执行耗时。</p>
+<p>如下图，我们分别用两用种方式简单的实现布局测试下</p>
+<p><img src="http://i.imgur.com/fboIfAp.png" alt=""></p>
+<p>#####LinearLayout</p>
+<p>Measure：0.738ms<br>Layout：0.176ms<br>draw：7.655ms</p>
+<p>#####RelativeLayout</p>
+<p>Measure：2.280ms<br>Layout：0.153ms<br>draw：7.696ms<br>从这个数据来看无论使用RelativeLayout还是LinearLayout，layout和draw的过程两者相差无几，考虑到误差的问题，几乎可以认为两者不分伯仲，关键是Measure的过程RelativeLayout却比LinearLayout慢了一大截。</p>
+<p>###Measure都干什么了</p>
+<p>####RelativeLayout的onMeasure()方法<br>    View[] views = mSortedHorizontalChildren;<br>    int count = views.length;</p>
+<pre><code>for (int i = 0; i &lt; count; i++) {
+  View child = views[i];
+  if (child.getVisibility() != GONE) {
+    LayoutParams params = (LayoutParams) child.getLayoutParams();
+    int[] rules = params.getRules(layoutDirection);
+
+    applyHorizontalSizeRules(params, myWidth, rules);
+    measureChildHorizontal(child, params, myWidth, myHeight);
+
+    if (positionChildHorizontal(child, params, myWidth, isWrapContentWidth)) {
+      offsetHorizontalAxis = true;
+    }
+  }
+}
+
+views = mSortedVerticalChildren;
+count = views.length;
+final int targetSdkVersion = getContext().getApplicationInfo().targetSdkVersion;
+
+for (int i = 0; i &lt; count; i++) {
+  View child = views[i];
+  if (child.getVisibility() != GONE) {
+    LayoutParams params = (LayoutParams) child.getLayoutParams();
+
+    applyVerticalSizeRules(params, myHeight);
+    measureChild(child, params, myWidth, myHeight);
+    if (positionChildVertical(child, params, myHeight, isWrapContentHeight)) {
+      offsetVerticalAxis = true;
+    }
+
+    if (isWrapContentWidth) {
+      if (isLayoutRtl()) {
+        if (targetSdkVersion &lt; Build.VERSION_CODES.KITKAT) {
+          width = Math.max(width, myWidth - params.mLeft);
+        } else {
+          width = Math.max(width, myWidth - params.mLeft - params.leftMargin);
+        }
+      } else {
+        if (targetSdkVersion &lt; Build.VERSION_CODES.KITKAT) {
+          width = Math.max(width, params.mRight);
+        } else {
+          width = Math.max(width, params.mRight + params.rightMargin);
+        }
+      }
+    }
+
+    if (isWrapContentHeight) {
+      if (targetSdkVersion &lt; Build.VERSION_CODES.KITKAT) {
+        height = Math.max(height, params.mBottom);
+      } else {
+        height = Math.max(height, params.mBottom + params.bottomMargin);
+      }
+    }
+
+    if (child != ignore || verticalGravity) {
+      left = Math.min(left, params.mLeft - params.leftMargin);
+      top = Math.min(top, params.mTop - params.topMargin);
+    }
+
+    if (child != ignore || horizontalGravity) {
+      right = Math.max(right, params.mRight + params.rightMargin);
+      bottom = Math.max(bottom, params.mBottom + params.bottomMargin);
+    }
+  }
+}
+</code></pre><p>根据源码我们发现RelativeLayout会对子View做两次measure。这是为什么呢？首先RelativeLayout中子View的排列方式是基于彼此的依赖关系，而这个依赖关系可能和布局中View的顺序并不相同，在确定每个子View的位置的时候，就需要先给所有的子View排序一下。又因为RelativeLayout允许A，B 2个子View，横向上B依赖A，纵向上A依赖B。所以需要横向纵向分别进行一次排序测量。</p>
+<p>####LinearLayout的onMeasure()方法</p>
+<pre><code>@Override
+protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+if (mOrientation == VERTICAL) {
+  measureVertical(widthMeasureSpec, heightMeasureSpec);
+} else {
+  measureHorizontal(widthMeasureSpec, heightMeasureSpec);
+}
+</code></pre><p>  }</p>
+<p>####与RelativeLayout相比LinearLayout的measure就简单明了的多了，先判断线性规则，然后执行对应方向上的测量。随便看一个吧。</p>
+<pre><code>for (int i = 0; i &lt; count; ++i) {
+  final View child = getVirtualChildAt(i);
+
+  if (child == null) {
+    mTotalLength += measureNullChild(i);
+    continue;
+  }
+
+  if (child.getVisibility() == View.GONE) {
+   i += getChildrenSkipCount(child, i);
+   continue;
+  }
+
+  if (hasDividerBeforeChildAt(i)) {
+    mTotalLength += mDividerHeight;
+  }
+
+  LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) child.getLayoutParams();
+
+  totalWeight += lp.weight;
+
+  if (heightMode == MeasureSpec.EXACTLY &amp;&amp; lp.height == 0 &amp;&amp; lp.weight &gt; 0) {
+    // Optimization: don&apos;t bother measuring children who are going to use
+    // leftover space. These views will get measured again down below if
+    // there is any leftover space.
+    final int totalLength = mTotalLength;
+    mTotalLength = Math.max(totalLength, totalLength + lp.topMargin + lp.bottomMargin);
+  } else {
+    int oldHeight = Integer.MIN_VALUE;
+
+    if (lp.height == 0 &amp;&amp; lp.weight &gt; 0) {
+      // heightMode is either UNSPECIFIED or AT_MOST, and this
+      // child wanted to stretch to fill available space.
+      // Translate that to WRAP_CONTENT so that it does not end up
+      // with a height of 0
+      oldHeight = 0;
+      lp.height = LayoutParams.WRAP_CONTENT;
+    }
+
+    // Determine how big this child would like to be. If this or
+    // previous children have given a weight, then we allow it to
+    // use all available space (and we will shrink things later
+    // if needed).
+    measureChildBeforeLayout(
+       child, i, widthMeasureSpec, 0, heightMeasureSpec,
+       totalWeight == 0 ? mTotalLength : 0);
+
+    if (oldHeight != Integer.MIN_VALUE) {
+     lp.height = oldHeight;
+    }
+
+    final int childHeight = child.getMeasuredHeight();
+    final int totalLength = mTotalLength;
+    mTotalLength = Math.max(totalLength, totalLength + childHeight + lp.topMargin +
+       lp.bottomMargin + getNextLocationOffset(child));
+
+    if (useLargestChild) {
+      largestChildHeight = Math.max(childHeight, largestChildHeight);
+    }
+  }
+</code></pre><ul>
+<li>父视图在对子视图进行measure操作的过程中，使用变量mTotalLength保存已经measure过的child所占用的高度，该变量刚开始时是0。</li>
+<li>在for循环中调用measureChildBeforeLayout（）对每一个child进行测量，该函数实际上仅仅是调用了measureChildWithMargins(),在调用该方法时，使用了两个参数。其中一个是heightMeasureSpec，该参数为LinearLayout本身的measureSpec；另一个参数就是mTotalLength，代表该LinearLayout已经被其子视图所占用的高度。</li>
+<li>每次for循环对child测量完毕后，调用child.getMeasuredHeight()获取该子视图最终的高度，并将这个高度添加到mTotalLength中。在本步骤中，暂时避开了lp.weight&gt;0的子视图，即暂时先不测量这些子视图，因为后面将把父视图剩余的高度按照weight值的大小平均分配给相应的子视图。源码中使用了一个局部变量totalWeight累计所有子视图的weight值。处理lp.weight&gt;0的情况需要注意，如果变量heightMode是EXACTLY，那么，当其他子视图占满父视图的高度后，weight&gt;0的子视图可能分配不到布局空间，从而不被显示，只有当heightMode是AT_MOST或者UNSPECIFIED时，weight&gt;0的视图才能优先获得布局高度。</li>
+<li>最后我们的结论是：如果不使用weight属性，LinearLayout会在当前方向上进行一次measure的过程，如果使用weight属性，LinearLayout会避开设置过weight属性的view做第一次measure，完了再对设置过weight属性的view做第二次measure。由此可见，weight属性对性能是有影响的，而且本身有大坑，请注意避让。</li>
+</ul>
+<p>###小结</p>
+<p>从源码中我们似乎能看出，我们先前的测试结果中RelativeLayout不如LinearLayout快的根本原因是RelativeLayout需要对其子View进行两次measure过程。而LinearLayout则只需一次measure过程，所以显然会快于RelativeLayout，但是如果LinearLayout中有weight属性，则也需要进行两次measure，但即便如此，应该仍然会比RelativeLayout的情况好一点。</p>
+<p>####RelativeLayout另一个性能问题</p>
+<p>对比到这里就结束了嘛？显然没有！我们再看看View的Measure（）方法都干了些什么？</p>
+<pre><code>public final void measure(int widthMeasureSpec, int heightMeasureSpec) {
+
+if ((mPrivateFlags &amp; PFLAG_FORCE_LAYOUT) == PFLAG_FORCE_LAYOUT ||
+    widthMeasureSpec != mOldWidthMeasureSpec ||
+    heightMeasureSpec != mOldHeightMeasureSpec) {
+                 ......
+  }
+   mOldWidthMeasureSpec = widthMeasureSpec;
+mOldHeightMeasureSpec = heightMeasureSpec;
+
+mMeasureCache.put(key, ((long) mMeasuredWidth) &lt;&lt; 32 |
+    (long) mMeasuredHeight &amp; 0xffffffffL); // suppress sign extension
+}
+</code></pre><p>View的measure方法里对绘制过程做了一个优化，如果我们或者我们的子View没有要求强制刷新，而父View给子View的传入值也没有变化（也就是说子View的位置没变化），就不会做无谓的measure。但是上面已经说了RelativeLayout要做两次measure，而在做横向的测量时，纵向的测量结果尚未完成，只好暂时使用myHeight传入子View系统，假如子View的Height不等于（设置了margin）myHeight的高度，那么measure中上面代码所做得优化将不起作用，这一过程将进一步影响RelativeLayout的绘制性能。而LinearLayout则无这方面的担忧。解决这个问题也很好办，如果可以，尽量使用padding代替margin。</p>
+<p>###结论</p>
+<ul>
+<li>1.RelativeLayout会让子View调用2次onMeasure，LinearLayout 在有weight时，也会调用子View2次onMeasure</li>
+<li>2.RelativeLayout的子View如果高度和RelativeLayout不同，则会引发效率问题，当子View很复杂时，这个问题会更加严重。如果可以，尽量使用padding代替margin。</li>
+<li>3.在不影响层级深度的情况下,使用LinearLayout和FrameLayout而不是RelativeLayout。<br>最后再思考一下文章开头那个矛盾的问题，为什么Google给开发者默认新建了个RelativeLayout，而自己却在DecorView中用了个LinearLayout。因为DecorView的层级深度是已知而且固定的，上面一个标题栏，下面一个内容栏。采用RelativeLayout并不会降低层级深度，所以此时在根节点上用LinearLayout是效率最高的。而之所以给开发者默认新建了个RelativeLayout是希望开发者能采用尽量少的View层级来表达布局以实现性能最优，因为复杂的View嵌套对性能的影响会更大一些。</li>
+</ul>
+<p>####原文地址：<a href="http://www.jianshu.com/p/8a7d059da746" target="_blank" rel="external">http://www.jianshu.com/p/8a7d059da746</a></p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2017/01/18/layoutFouction/" class="archive-article-date">
+  	<time datetime="2017-01-18T06:46:24.000Z" itemprop="datePublished"><i class="icon-clock"></i>2017-01-18</time>
+</a>
+      
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2016/11/29/UnderLineTextView/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android带下划线的TextView</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 Xiaote
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: true,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+      <li data-hook="tools-section-friends"><span class="text">友链</span><i class="icon-link"></i></li>
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				
+    			</div>
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-friends">
+  		
+  			<div class="friends-wrap" id="js-friends">
+  			
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="https://hexo.io/zh-cn/docs/">hexo文档</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="http://droidyue.com/">友情链接2</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">友情链接3</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">友情链接4</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">友情链接5</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">友情链接6</a>
+  	        
+  	        </div>
+  		
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">Talon，&lt;br&gt;就职于Founder&lt;br&gt;&lt;br&gt;热爱大海与冷笑话，&lt;br/&gt;目前是一枚Android程序猿&lt;br/&gt;&lt;br/&gt;胆小认生，不易相处，&lt;br&gt;年轻无为，卖马为生</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

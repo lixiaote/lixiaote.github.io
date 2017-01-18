@@ -142,6 +142,53 @@
       <div class="body-wrap">
         
   
+    <article id="post-layoutFouction" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/18/layoutFouction/">Android中RelativeLayout和LinearLayout性能分析</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>先看一些现象吧：用eclipse或者Android studio，新建一个Activity自动生成的布局文件都是RelativeLayout，或许你会认为这是IDE的默认设置问题，其实不然，这是由 android-sdk\tools\templates\activities\BlankActivity\root\res\layout\activity_simple.xml.ftl 这个文件事先就定好了的，也就是说这是Google的选择，而非IDE的选择。那SDK为什么会默认给开发者新建一个默认的RelativeLayout布局呢？当然是因为RelativeLayout的性能更优，性能至上嘛。但是我们再看看默认新建的这个RelativeLayout的父容器，也就是当前窗口的顶级View——DecorView，它却是个垂直方向的LinearLayout，上面是标题栏，下面是内容栏。那么问题来了，Google为什么给开发者默认新建了个RelativeLayout，而自己却偷偷用了个LinearLayout，到底谁的性能更高，开发者该怎么选择呢？<br>
+        <p class="article-more-link">
+          <a class="article-more-a"  href="/2017/01/18/layoutFouction/#more">more >></a>
+        </p>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2017/01/18/layoutFouction/" class="archive-article-date">
+  	<time datetime="2017-01-18T06:46:24.000Z" itemprop="datePublished"><i class="icon-clock"></i>2017-01-18</time>
+</a>
+      
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
     <article id="post-UnderLineTextView" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -249,7 +296,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2016 Xiaote
+    		&copy; 2017 Xiaote
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
